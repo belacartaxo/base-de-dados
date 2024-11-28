@@ -1,0 +1,17 @@
+SELECT t.nome AS distrito, p.designacao, t.max_votos
+FROM partidos p JOIN (
+    SELECT t.nome, t.partido, MAX(t.votos) AS max_votos
+    FROM (
+        SELECT d.nome, d.codigo, c.partido, SUM(c.votos) AS votos
+        FROM distritos d JOIN (
+            SELECT c.distrito, f.partido, f.votos
+            FROM concelhos c JOIN (
+                SELECT f.concelho, v.partido, v.votos
+                FROM freguesias f JOIN votacoes v
+                ON f.codigo = v.freguesia
+            ) f ON c.codigo = f.concelho
+        ) c ON d.codigo = c.distrito
+        GROUP BY d.codigo, c.partido
+    ) t
+    GROUP BY t.codigo
+) t ON p.sigla = t.partido;

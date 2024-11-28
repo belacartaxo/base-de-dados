@@ -1,0 +1,4 @@
+select nome, lotacao, morada
+from recintos
+where morada like "%PARQUE%"
+order by lotacao desc, nome;

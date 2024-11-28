@@ -1,0 +1,10 @@
+SELECT partido, totV - totM AS diferenca
+FROM (
+    SELECT partido, SUM(mandatos)*100.0/(SELECT SUM(mandatos) FROM listas) AS totM
+    FROM listas
+    GROUP BY partido
+) m NATURAL JOIN (
+    SELECT partido, SUM(votos)*100.0/(SELECT SUM(votantes) FROM participacoes) AS totV
+    FROM votacoes
+    GROUP BY partido
+) V;

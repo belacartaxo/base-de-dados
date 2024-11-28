@@ -1,0 +1,5 @@
+SELECT partido, SUM(votos) AS votos
+FROM votacoes
+GROUP BY partido
+ORDER BY votos DESC
+LIMIT 5;

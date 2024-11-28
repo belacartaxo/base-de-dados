@@ -1,0 +1,3 @@
+SELECT v.partido, f.nome, MAX(v.votos) AS maxVotos
+FROM freguesias f JOIN votacoes v
+ON f.codigo = v.freguesia;

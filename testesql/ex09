@@ -1,0 +1,9 @@
+with A as
+    (select d.designacao, r.id, atividade
+    from distritos d join concelhos c on d.cod = c.distrito
+    join recintos r on c.cod = r.concelho
+    natural join usos natural join atividades)
+select designacao, atividade
+from A
+group by designacao, atividade
+order by designacao, atividade

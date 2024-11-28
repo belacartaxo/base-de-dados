@@ -1,0 +1,4 @@
+select nome, lotacao, c.designacao
+from recintos r join concelhos c on r.concelho = c.cod
+where lotacao <= 100
+order by nome;

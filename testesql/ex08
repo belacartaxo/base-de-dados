@@ -1,0 +1,19 @@
+with A as
+    (select *
+    from concelhos c join recintos r on c.cod = r.concelho
+    natural join usos natural join atividades),
+total as (
+    select *, count(id) as tot
+    from recintos r
+    group by concelho
+),
+cine_tot as (
+    select *, count(id) as tot
+    from A
+    where atividade = "cinema"
+    group by concelho
+)
+select designacao
+from total a join cine_tot b
+on a.tot= b.tot and a.concelho = b.concelho
+order by designacao

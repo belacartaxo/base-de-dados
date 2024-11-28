@@ -1,0 +1,27 @@
+with totConc as (
+    select d.nome as distrito, count (c.codigo) as concelhos
+    from distritos d join concelhos c on c.distrito = d.codigo
+    group by d.codigo
+),
+vencedorCon as (
+    select c.distrito, c.codigo, t.partido, t.totVotos
+    from concelhos c join (
+        select f.concelho, v.partido, sum(v.votos) as totVotos
+        from freguesias f join votacoes v 
+        on f.codigo = v.freguesia
+        group by f.concelho, v.partido
+    ) t
+    on c.codigo = t.concelho
+    group by t.concelho
+    having max(totVotos)
+),
+totVenc as (
+    select d.nome as distrito, d.codigo, v.partido, count(v.codigo) as totConc
+    from vencedorCon v join distritos d
+    on v.distrito = d.codigo
+    group by d.codigo, v.partido
+)
+select v.codigo, c.distrito, v.partido
+from totConc c join totVenc v
+on v.distrito = c.distrito
+where c.concelhos = v.totConc

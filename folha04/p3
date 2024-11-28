@@ -1,0 +1,3 @@
+select count(codigo) as total
+from freguesias
+where nome like '%vilas%';

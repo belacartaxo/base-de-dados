@@ -1,0 +1,3 @@
+select codigo 
+from freguesias
+where nome = 'Massarelos';

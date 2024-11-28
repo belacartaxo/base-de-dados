@@ -1,0 +1,15 @@
+select partido, sum(mandatos) as total
+from listas
+where distrito = (
+    select d.codigo
+    from distritos d join (
+        select distrito
+        from freguesias f join concelhos c on f.concelho = c.CODIGO
+        where f.nome = (
+            select nome
+            from freguesias
+            where nome = "Massarelos"
+        )) n 
+    on d.codigo = n.distrito)
+group by partido
+order by total desc;

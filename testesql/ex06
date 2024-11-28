@@ -1,0 +1,11 @@
+select r.distritoNome as designacao, count(r.id) as num, max(r.lotacao) as max
+from tipos t natural join (select * 
+    from recintos r join (
+        select c.cod, d.designacao as "distritoNome"
+        from concelhos c join distritos d on c.distrito = d.cod) c  
+        on r.concelho = c.cod
+    ) r
+where t.descricao = "Cinema"
+group by r.distritoNome
+having num >= 7
+order by designacao;

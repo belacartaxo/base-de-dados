@@ -1,0 +1,7 @@
+select d.nome, t.votantes, t.abstencoes
+from distritos d
+join (
+    select distrito, votantes, abstencoes
+    from participacoes
+    where abstencoes >= 0.75 * votantes
+) t on d.codigo = t.distrito;

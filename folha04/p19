@@ -1,0 +1,4 @@
+SELECT l.partido, d.nome
+FROM listas l JOIN distritos d
+ON l.distrito = d.codigo
+WHERE d.nome LIKE '%o%' AND l.mandatos = 0;

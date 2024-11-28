@@ -1,0 +1,13 @@
+WITH tab_aux AS (
+    SELECT t.codDist, t.concelho, t.codCon, COUNT(f.codigo) AS totFreg
+    FROM freguesias f JOIN (
+        SELECT d.codigo AS codDist, c.codigo AS codCon, c.nome AS concelho
+        FROM distritos d JOIN concelhos c
+        ON d.codigo = c.distrito
+    ) t ON f.concelho = t.codCon
+    GROUP BY t.codCon
+)
+SELECT a.codDist, a.concelho, b.concelho
+FROM tab_aux a, tab_aux b
+ON a.codDist = b.codDist
+WHERE a.codCon < b.codCon AND a.totFreg = b.totFreg;

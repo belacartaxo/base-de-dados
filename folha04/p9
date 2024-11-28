@@ -1,0 +1,16 @@
+select *
+from partidos
+where sigla not in (
+    select distinct partido
+    from votacoes v
+    join (
+        select f.codigo, f.nome
+        from freguesias f join (
+            select c.codigo 
+            from concelhos c join (
+                select codigo
+                from distritos 
+                where nome = 'Lisboa') d
+            on c.distrito = d.codigo) c 
+        on f.concelho = c.codigo) f
+    on v.freguesia = f.codigo);

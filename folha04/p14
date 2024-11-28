@@ -1,0 +1,16 @@
+SELECT concelho, distrito
+FROM (
+    SELECT c.nome AS concelho, COUNT(f.codigo) AS maxFreguesias
+    FROM freguesias f JOIN concelhos c
+    ON f.concelho = c.codigo
+    GROUP BY c.codigo
+    ORDER BY maxFreguesias DESC
+    LIMIT 1
+) JOIN (
+    SELECT d.nome AS distrito, COUNT(c.codigo) AS maxConcelhos
+    FROM concelhos c JOIN distritos d
+    ON c.distrito = d.codigo
+    GROUP BY d.codigo
+    ORDER BY maxConcelhos DESC
+    LIMIT 1
+);

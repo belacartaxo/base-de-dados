@@ -1,0 +1,5 @@
+SELECT c.nome AS concelho, v.partido, SUM(v.votos) AS sVotos
+FROM votacoes v JOIN freguesias f ON v.freguesia = f.codigo
+JOIN concelhos c ON f.concelho = c.codigo
+GROUP BY f.concelho, v.partido
+HAVING sVotos = 0;

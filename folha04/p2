@@ -1,0 +1,7 @@
+select partido, votos
+from votacoes
+where freguesia = (
+    select codigo
+    from freguesias
+    where nome = 'Massarelos'
+);

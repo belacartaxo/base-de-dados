@@ -1,0 +1,5 @@
+SELECT c.nome
+FROM concelhos c JOIN (
+    SELECT distrito, MAX(votantes)
+    FROM participacoes p
+) p ON c.distrito = p.distrito;

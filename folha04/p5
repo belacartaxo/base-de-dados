@@ -1,0 +1,11 @@
+select d.codigo, d.nome
+from distritos d
+join (
+    select distrito
+    from freguesias f
+    join concelhos c on f.concelho = c.codigo
+    where f.nome in (
+        select nome
+        from freguesias 
+        where nome =  "Massarelos")) n
+    on d.codigo = n.distrito;

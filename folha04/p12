@@ -1,0 +1,3 @@
+select partido, sum(votos) as votos
+from votacoes
+group by partido;

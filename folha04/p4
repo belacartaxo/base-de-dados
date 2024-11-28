@@ -1,0 +1,4 @@
+select f.codigo, f.nome
+from freguesias f
+join concelhos c on f.concelho = c.codigo
+where c.nome = 'Espinho';

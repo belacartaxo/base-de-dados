@@ -1,0 +1,12 @@
+select nome
+from atividades a join (
+    select *
+    from usos u join (select * 
+    from recintos r join (
+        select c.cod
+        from concelhos c join distritos d on c.distrito = d.cod
+        where d.designacao = "Aveiro") c  on r.concelho = c.cod
+    ) r on u.id = r.id) u on a.ref = u.ref
+where a.atividade="teatro"
+order by nome
+    

@@ -1,0 +1,15 @@
+with A as
+    (select * , c.designacao as "NomeConcelho"
+    from concelhos c join recintos r on c.cod = r.concelho
+    natural join tipos)
+select c.designacao, d.designacao
+from concelhos c join distritos d on c.distrito=d.cod
+where c.designacao not in (select designacao
+    from (
+        select *
+        from A
+        where descricao = "Cinema" or descricao = "Cine-Teatro" 
+        group by id
+    ) 
+    group by concelho) 
+order by c.designacao

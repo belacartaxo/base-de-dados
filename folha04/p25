@@ -1,0 +1,3 @@
+SELECT distrito, votantes / SUM(mandatos) AS votos_por_mand
+FROM participacoes NATURAL JOIN listas
+GROUP BY distrito;

@@ -1,0 +1,12 @@
+with A as
+    (select designacao, descricao, id
+    from concelhos c join recintos r on c.cod = r.concelho
+    natural join tipos)
+select designacao, descricao, num
+from(select *, count(id) as num
+    from A
+    group by designacao, descricao)
+where num >= 4
+group by designacao
+having max(num)
+order by designacao, descricao

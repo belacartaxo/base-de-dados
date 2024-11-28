@@ -1,0 +1,34 @@
+--Houve algum partido a vencer em todas as freguesias de um
+--concelho do distrito do Porto? Indique código do concelho e sigla do partido.
+with totFreg as (
+    select * 
+    from distritos d join (
+        select c.nome as concelho, c.distrito, count(f.codigo) as totFreg
+        from concelhos c join freguesias f
+        on c.codigo = f.concelho
+        group by c.codigo) c
+    on c.distrito = d.codigo
+    where d.nome = "Porto"
+    ),
+vencedorFreg as (
+    select freguesia, partido
+    from votacoes 
+    group by freguesia
+    having votos = max(votos)
+),
+totVenc as (
+    select c.nome as concelho, v.partido, count(f.codigo) totFreg
+    from vencedorFreg v join freguesias f
+    on f.codigo = v.freguesia
+    join concelhos c
+    on c.codigo = f.concelho
+    group by f.concelho, v.partido
+),
+vencConcelho as (
+    select f.concelho, v.partido, f.distrito
+    from totVenc v join totFreg f
+    on v.concelho = f.concelho
+    where v.totFreg = f.totFreg
+)
+select concelho, partido
+from vencConcelho

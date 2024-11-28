@@ -1,0 +1,4 @@
+select d.designacao, count(c.cod) as "num"
+from concelhos c join distritos d on c.distrito = d.cod
+group by d.cod
+order by num desc, d.designacao;

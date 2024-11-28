@@ -1,0 +1,7 @@
+SELECT avg(totFreg) AS media
+FROM (
+    SELECT COUNT(f.codigo) AS totFreg
+    FROM freguesias f JOIN concelhos c
+    ON f.concelho = c.codigo
+    GROUP BY c.codigo
+);
